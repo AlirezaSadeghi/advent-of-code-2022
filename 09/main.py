@@ -2,6 +2,7 @@ import os
 
 from pathlib import Path
 
+
 def process_input(input_path):
     moves = []
     with open(input_path, "r") as input_file:
@@ -11,11 +12,12 @@ def process_input(input_path):
             moves.append((direction, steps))
     return moves
 
+
 def adapt_tail_position(knots_ij, head_idx, tail_idx):
     head_i, head_j, tail_i, tail_j = *knots_ij[head_idx], *knots_ij[tail_idx]
     if abs(head_i - tail_i) <= 1 and abs(head_j - tail_j) <= 1:
         return tail_i, tail_j, False
-    
+
     diff = abs(head_i - tail_i) + abs(head_j - tail_j)
     # hori/vert move
     if diff == 2:
@@ -24,7 +26,7 @@ def adapt_tail_position(knots_ij, head_idx, tail_idx):
             knots_ij[tail_idx][0] += 1 if head_i > tail_i else -1
         else:
             knots_ij[tail_idx][1] += 1 if head_j > tail_j else -1
-    
+
     # diagonal move
     if diff > 2:
         knots_ij[tail_idx][0] += 1 if head_i > tail_i else -1
@@ -36,7 +38,7 @@ def adapt_tail_position(knots_ij, head_idx, tail_idx):
 def unique_tail_positions(moves, knots=2):
     tail_positions = set([(0, 0)])
     knots_ij = [[0, 0] for _ in range(knots)]
-    
+
     for direction, steps in moves:
         for _ in range(steps):
             if direction == "D":
@@ -55,8 +57,8 @@ def unique_tail_positions(moves, knots=2):
                 if idx == knots - 1:
                     tail_positions.add((tail_i, tail_j))
 
-    
     return tail_positions
+
 
 if __name__ == "__main__":
     input_path = os.path.join(Path(__file__).parent.absolute(), "input.txt")

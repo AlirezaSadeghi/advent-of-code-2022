@@ -2,6 +2,7 @@ import os
 
 from pathlib import Path
 
+
 def process_input(input_path):
     grid = []
     with open(input_path, "r") as input_file:
@@ -20,14 +21,15 @@ def find_visible_trees(grid):
             row, col = grid[idx], [item[jdx] for item in grid]
 
             lv = max(row[:jdx]) < cur_tree
-            rv = max(row[jdx+1:]) < cur_tree
+            rv = max(row[jdx + 1 :]) < cur_tree
             tv = max(col[:idx]) < cur_tree
-            bv = max(col[idx+1:]) < cur_tree
+            bv = max(col[idx + 1 :]) < cur_tree
 
             if any([lv, rv, tv, bv]):
                 internal_nodes += 1
 
     return edge_nodes + internal_nodes
+
 
 def find_scenic_score(grid):
     cur_ss = 0
@@ -42,26 +44,26 @@ def find_scenic_score(grid):
                 lss += 1
                 if row[jdx - kdx] >= cur_tree:
                     break
-            
+
             for kdx in range(1, idx + 1):
                 tss += 1
                 if col[idx - kdx] >= cur_tree:
                     break
-            
+
             for kdx in range(1, len(row) - jdx):
                 rss += 1
                 if row[jdx + kdx] >= cur_tree:
                     break
-            
+
             for kdx in range(1, len(col) - idx):
                 bss += 1
                 if col[idx + kdx] >= cur_tree:
                     break
-            
+
             cur_ss = max(cur_ss, lss * rss * tss * bss)
-    
+
     return cur_ss
-            
+
 
 if __name__ == "__main__":
     input_path = os.path.join(Path(__file__).parent.absolute(), "input.txt")
