@@ -14,7 +14,7 @@ class Monkey:
         test_fn_int=None,
         test_true=None,
         test_false=None,
-        lcm_of_divisors=None
+        lcm_of_divisors=None,
     ):
         self.id = _id
         self.items = items
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     input_path = os.path.join(Path(__file__).parent.absolute(), "input.txt")
 
     monkeys = process_input(input_path)
-    
+
     state = State(deepcopy(monkeys))
     for _ in range(20):
         state.play_round()
@@ -129,4 +129,3 @@ if __name__ == "__main__":
     for idx in range(10000):
         state.play_round()
     print("2: ", state.monkey_business)
-
